@@ -11,6 +11,8 @@ More information at [https://github.com/espressif/esptool](https://github.com/es
 write some code directly on it and see its output.
 More information at [https://github.com/dhylands/rshell](https://github.com/dhylands/rshell).
 
+## Install
+
 If you don't pipenv installed, you can do it with the following commands.
 
 ```bash
@@ -31,6 +33,8 @@ to the command as shown next.
 pipenv run esptool.py --help
 pipenv run rshell --help
 ```
+
+## Flash
 
 To be able to use micropython on the ESP32, the micropython firmware
 needs to be flashed on to it. This only needs to be done once
@@ -55,6 +59,8 @@ pipenv run esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash
 pipenv run esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 esp32-20190125-v1.10.bin
 ```
 
+## Troubleshoot
+
 If an exception saying `[Errno 13] Permission denied: '/dev/ttyUSB0'`
 appears while executing the previous commands,
 add the your current user to the dialout group.
@@ -65,7 +71,9 @@ sudo usermod -a -G dialout ${USER}
 
 Logout and login to apply this change.
 
-Next, access the interactive console.
+## Try out
+
+Access the interactive console.
 
 ```bash
 pipenv run rshell --port /dev/ttyUSB0 repl
