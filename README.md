@@ -44,7 +44,7 @@ Download the micropython firmware from
 [http://micropython.org/download#esp32](http://micropython.org/download#esp32)
 and place it inside the same folder from where you want to execute the commands.
 
-The current stable version is `esp32-20190125-v1.10.bin`.
+The current stable version is `esp32-20190529-v1.11.bin`.
 
 In order use each library you need to tell it
 which device it should work with by specifying the port.
@@ -56,7 +56,7 @@ Use it in the port part of the next command.
 
 ```bash
 pipenv run esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash
-pipenv run esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 esp32-20190125-v1.10.bin
+pipenv run esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 esp32-20190529-v1.11.bin
 ```
 
 ## Troubleshoot
