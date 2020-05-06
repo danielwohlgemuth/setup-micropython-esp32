@@ -1,10 +1,10 @@
 # Setup Micropython on ESP32
 
-> Tested only on **Ubuntu 18.04**
+> Instructions for Ubuntu 18.04
 
-This project uses pipenv to install the `esptool` and `rshell` python libraries.
+This project uses the `esptool` and `rshell` Python libraries to flash Micropython and interact with the ESP32.
 
-`esptool` is used to install the micropython firmware on to the ESP32.
+`esptool` is used to install the Micropython firmware on to the ESP32.
 More information at [https://github.com/espressif/esptool](https://github.com/espressif/esptool).
 
 `rshell` is used to interact with the EPS32,
@@ -13,38 +13,43 @@ More information at [https://github.com/dhylands/rshell](https://github.com/dhyl
 
 ## Install
 
-If you don't pipenv installed, you can do it with the following commands.
+If you don't have virtualenv for Python 3 installed, you can do it with the following command.
 
 ```bash
-sudo apt install python3-pip python3-virtualenv
-sudo pip install pipenv
+sudo apt install python3-virtualenv
 ```
 
-Install the libraries listed inside Pipfile.
+Setup and activate the virtual environment.
 
 ```bash
-pipenv install
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-Run the installed libraries with pipenv by prepending `pipenv run` 
-to the command as shown next.
+Install the libraries listed inside the `requirements.txt` file.
 
 ```bash
-pipenv run esptool.py --help
-pipenv run rshell --help
+pip install -r requirements.txt
+```
+
+Try if the installed libraries work correctly.
+
+```bash
+esptool.py --help
+rshell --help
 ```
 
 ## Flash
 
-To be able to use micropython on the ESP32, the micropython firmware
+To be able to use Micropython on the ESP32, the Micropython firmware
 needs to be flashed on to it. This only needs to be done once
 and should be reversible by uploading a project from the Arduino IDE.
 
-Download the micropython firmware from
-[http://micropython.org/download#esp32](http://micropython.org/download#esp32)
+Download the Micropython firmware from
+[http://micropython.org/download/esp32/](http://micropython.org/download/esp32/)
 and place it inside the same folder from where you want to execute the commands.
 
-The current stable version is `esp32-20190529-v1.11.bin`.
+The current stable version is `esp32-idf3-20191220-v1.12.bin`.
 
 In order use each library you need to tell it
 which device it should work with by specifying the port.
@@ -55,15 +60,15 @@ Usually it should be `/dev/ttyUSB0` on Linux
 Use it in the port part of the next command.
 
 ```bash
-pipenv run esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash
-pipenv run esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 esp32-20190529-v1.11.bin
+esptool.py --chip esp32 --port /dev/ttyUSB0 erase_flash
+esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z 0x1000 esp32-idf3-20191220-v1.12.bin
 ```
 
 ## Troubleshoot
 
 If an exception saying `[Errno 13] Permission denied: '/dev/ttyUSB0'`
 appears while executing the previous commands,
-add the your current user to the dialout group.
+add your current user to the dialout group.
 
 ```bash
 sudo usermod -a -G dialout ${USER}
@@ -76,7 +81,7 @@ Logout and login to apply this change.
 Access the interactive console.
 
 ```bash
-pipenv run rshell --port /dev/ttyUSB0 repl
+rshell --port /dev/ttyUSB0 repl
 ```
 
 Read a value from the temperature and magnetic field (hall effect) sensor.
